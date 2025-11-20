@@ -27,22 +27,38 @@ def langlist(update, context):
     result = languaje_list(reference)
     update.message.reply_text(result)
 
-def get_verse(arg):
-    print(arg[0], arg[1], arg[2])
+def get_verse(args):
+    #print(arg[0], arg[1], arg[2])
     try:
-        req = API_URL + arg[0] + " " + arg[1] + "?translation=" + arg[2]
-        response = requests.get(req)
-        data = response.json()
-        print(req)
-        print(data) 
+        if args[0] == "random":
+            req = API_URL + "data/web/random"
+            response = requests.get(req)
+            data = response.json()
+
+            rverse = data["random_verse"]
+            book = rverse["book"]
+            chapter = rverse["chapter"]
+            verse = rverse["verse"]
+            text = rverse["text"].strip()
+            return f"{book} {chapter}:{verse}\n\n{text}"
+
+        if len(args) != 1:
+            req = API_URL + args[0] + " " + args[1] + "?translation=" + args[2]
+            response = requests.get(req)
+            data = response.json()
+        
+        print(data)
+
         if "text" in data:
             book = data["reference"]
             text = data["text"].strip()
             return f"{book}\n\n{text}"
         else:
             return "Verse wasnt found."
-    except:
+    except Exception as e:
+        print(e)
         return "API error."
+
 
 def verse(update, context):
     if len(context.args) == 0:
@@ -51,6 +67,45 @@ def verse(update, context):
 
     result = get_verse(context.args)
     update.message.reply_text(result)
+    update.message.reply_text("Try /verse random!")
+
+def send_long_message(update, text):
+    MAX = 4096
+    if len(text) <= MAX:
+        update.message.reply_text(text)
+        return
+    
+    # Enviar en partes
+    for i in range(0, len(text), MAX):
+        update.message.reply_text(text[i:i+MAX])
+
+def get_chapter(args):
+    book = "   "
+
+    try:
+        req = API_URL + args[0] + "+" + args[1]
+        response = requests.get(req)
+        data = response.json()
+        book += f"  {data['reference']}\n\n"
+
+        if  "reference" in data:
+            verses = data["verses"]
+            for i in range(len(verses)):
+                book += f"{verses[i]['verse']}- \n   {verses[i]['text']}"
+            return book
+        else:
+            return "Chapter wasnt found."
+    except Exception as e:
+        print(e)
+        return "API error."
+
+def chapter(update, context):
+    if len(context.args) == 0:
+        update.message.reply_text("Use: /chapter John 6")
+        return
+
+    result = get_chapter(context.args)
+    send_long_message(update, result)
 
 def start(update, context):
     update.message.reply_text(
@@ -63,6 +118,7 @@ def main():
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("verse", verse))
+    dp.add_handler(CommandHandler("chapter", chapter))
     dp.add_handler(CommandHandler("langs", langlist))
 
     updater.start_polling()
