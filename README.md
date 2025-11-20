@@ -1,83 +1,70 @@
-📌 Telegram Bible Verse Bot
+# Telegram Bible Verse Bot
 
-Bot de Telegram que envía versículos bíblicos usando una API pública.
-Ideal para estudios, inspiración diaria o uso personal.
+A Telegram bot built in Python that fetches Bible verses, chapters, and random passages using the public **Bible API**.  
+Designed as a lightweight example of API integration, command handling, and bot development using `python-telegram-bot`.
 
-🚀 Demo
+---
 
-(Colocar aquí un GIF o video mostrando el bot respondiendo)
+## 📌 Features
 
-📖 ¿Qué hace este bot?
+- `/verse <book> <chapter:verse> <translation>` – Returns a specific verse.  
+  Example: `/verse John 3:16 WEB`
 
-Recibe una cita bíblica como:
-/verse Juan 3:16
+- `/verse random` – Returns a random Bible verse.
 
-Consulta la API pública Bible-API
+- `/chapter <book> <chapter>` – Retrieves a full chapter, automatically split into multiple Telegram messages.
 
-Responde con el texto completo del versículo
+- `/langs` – Lists all available translations from the API.
 
-Incluye manejo básico de errores
+- Robust error handling
+- Automatic splitting of large messages (Telegram limit: 4096 chars)
 
-🛠 Tecnologías usadas
+---
 
-Python
+## 🛠️ Tech Stack
 
-python-telegram-bot
+- **Python 3.x**
+- **python-telegram-bot**
+- **requests**
+- **Bible API** (https://bible-api.com)
 
-Requests
+---
 
-Bible-API
+## 📁 Project Structure
 
-📦 Instalación y uso
+/
+├── src/
+│ ├── bot.py
+│ ├── requirements.txt
+│ └── README.md
+---
 
-1. Clonar el repo
-   git clone https://github.com/usuario/telegram-bible-verse-bot
-   cd telegram-bible-verse-bot/src
+## 🚀 Running the Bot
 
-2. Instalar dependencias
-   pip install -r requirements.txt
+### 1. Install dependencies
 
-3. Agregar tu token en bot.py
+pip install -r requirements.txt
 
-Reemplazar:
+### 2. Set your Telegram bot token
 
-TOKEN = "AQUI_TU_TOKEN"
+Create an environment variable or replace the placeholder inside `bot.py`:
 
-4. Ejecutar el bot
-   python bot.py
+```python
+TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+3. Run the bot
+nginx
+Copiar código
+python bot.py
+📌 API Used
+This bot uses the free Bible API:
+https://bible-api.com
 
-📘 Ejemplo de uso
+🧩 Future Improvements
+Add inline keyboard buttons
 
-Usuario:
+Add bookmarking/favorites
 
-/verse Mateo 5:14
+Add daily verse subscription
 
-Bot:
-
-Mateo 5:14
-
-“Vosotros sois la luz del mundo…”
-
-📷 Capturas
-
-(poné 2 o 3 screenshots de conversaciones del bot)
-
-🧩 Características
-
-Respuestas instantáneas
-
-Soporta cualquier cita bíblica
-
-Código simple y limpio
-
-Fácil de extender (ej. /dailyverse, /random, /search)
-
-📈 Próximas mejoras
-
-Enviar un versículo diario automáticamente
-
-Usar inline queries
-
-Buscar versículos por palabra clave
-
-Guardar historial de usuario
+Deploy via Docker or Railway.app
+```
