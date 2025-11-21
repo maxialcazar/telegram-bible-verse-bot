@@ -1,10 +1,9 @@
 import requests
-import config
+from bot.config import API_URL
 
 async def random_command(update, context):
     try:
-        # Si tu API es diferente, decime la ruta y lo cambio
-        response = requests.get(f"{config.API_URL}random")
+        response = requests.get(f"{API_URL}data/web/random")
         data = response.json()
 
         verse = data.get("text", "")

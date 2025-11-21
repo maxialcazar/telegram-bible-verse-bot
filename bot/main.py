@@ -3,8 +3,6 @@ from bot.handlers.chapter import chapter_command
 from bot.handlers.verse import verse_command
 from bot.handlers.langs import langs_command
 from bot.handlers.random_verse import random_command
-from bot.handlers.search import search_command
-from bot.handlers.daily import daily_command, send_daily_verse
 
 from bot.config import TOKEN
 
@@ -16,8 +14,6 @@ def main():
     app.add_handler(CommandHandler("chapter", chapter_command))
     app.add_handler(CommandHandler("langs", langs_command))
     app.add_handler(CommandHandler("random", random_command))
-    app.add_handler(CommandHandler("search", search_command))
-    app.add_handler(CommandHandler("daily", daily_command))
 
     app.run_polling()
 
