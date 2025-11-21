@@ -1,30 +1,109 @@
-# Telegram Bible Verse Bot
+📖 Telegram Bible Verse Bot
 
-Bot de Telegram completamente asíncrono usando:
+Un bot de Telegram que permite obtener versículos bíblicos, capítulos completos, realizar búsquedas rápidas y recibir un versículo diario.
+Utiliza la Bible API y está desarrollado con Python y python-telegram-bot (v20+).
 
-- python-telegram-bot v21+
-- httpx (AsyncClient global)
-- Cache interna
-- Arquitectura modular para escalar
+✨ Funciones disponibles
+/verse [libro capítulo:versículo]
 
-## Ejecución
+Devuelve un versículo específico.
+Ejemplo:
 
-1. Crear variable de entorno:
+/verse Juan 3:16
 
-export BOT_TOKEN="TU_TOKEN"
+/chapter [libro capítulo]
 
-markdown
-Copiar código
+Devuelve un capítulo completo.
 
-2. Instalar dependencias:
+/search [texto]
 
+Busca versículos que coincidan con un texto.
+Ejemplo:
+
+/search amor
+
+/random
+
+Devuelve un versículo aleatorio.
+
+/daily
+
+Activa un envío diario automático de un versículo.
+
+📦 Estructura del proyecto
+bot/
+│   main.py
+│   config.py
+│   __init__.py
+│
+├───handlers/
+│       verse.py
+│       chapter.py
+│       search.py
+│       random_verse.py
+│       daily.py
+│       __init__.py
+│
+├───services/
+│       bible_service.py
+│       __init__.py
+│
+├───client/
+│       http.py
+│       __init__.py
+│
+└───utils/
+        cache.py
+        __init__.py
+
+⚙️ Instalación
+1. Clonar el repositorio
+git clone https://github.com/tuusuario/telegram-bible-verse-bot.git
+cd telegram-bible-verse-bot
+
+2. Crear entorno virtual (opcional)
+python -m venv venv
+venv\Scripts\activate   # Windows
+
+3. Instalar dependencias
 pip install -r requirements.txt
 
-markdown
-Copiar código
+🔑 Configuración
 
-3. Ejecutar:
+En bot/config.py, definí tu token del bot:
 
-python -m bot.main
+TOKEN = "TU_TOKEN_AQUI"
+API_URL = "https://bible-api.com/"
 
-Copiar código
+
+⚠️ Importante: Nunca publiques el token del bot en GitHub.
+Usá variables de entorno si querés mayor seguridad.
+
+▶️ Ejecutar el bot
+
+Desde la raíz del proyecto:
+
+py -m bot.main
+
+
+El bot iniciará modo polling de forma asíncrona.
+
+🧩 Dependencias principales
+
+python-telegram-bot ≥ 20
+
+aiohttp
+
+pytz
+
+APScheduler
+
+Todas están listadas en requirements.txt.
+
+🤝 Contribuciones
+
+Pull requests, mejoras y correcciones son bienvenidas.
+
+📄 Licencia
+
+MIT License.
